@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Made with Thimble</title>
+  <style>
+  canvas {
+        background: black;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: optimize-contrast;
+  }
+  html,body,canvas {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    overflow:hidden;
+  }
+  </style>
+</head>
+<body>
+
+  <canvas id="myCanvas"></canvas>
+  <script>
+    var left,right,fire;
+    var pos = 40;
+
+    var game = window.myCanvas.getContext("2d");
+    game.width = pos*2;
+    game.height = game.width;
+
+    var invader = new Image();
+    invader.src="invader.png";
+    invader.onload=function(){ invader.loaded = true };
+
+    var turret = new Image();
+    turret.src="turret.png";
+    turret.onload=function(){ turret.loaded = true };
+
+    window.addEventListener("keydown", function(e) {
+      if (e.keyCode===37) left = true;
+      if (e.keyCode===39) right = true;
+    });
+
+    window.addEventListener("keyup", function(e) {
+      if (e.keyCode===37) left = false;
+      if (e.keyCode===39) right = false;
+    });
+
+    function play() {
+      if (left) pos = pos-4;
+      if (right) pos = pos+4;
+
+      if (invader.loaded && turret.loaded) draw();
+    }
+
+    var frame = 0;
+    function draw() {
+      frame = frame + 1;
+      game.clearRect(0,0,240,240);
+
+      let y = 0;
+      while (y < 4) {
+
+        let x = 0;
+        while (x < 6) {
+          if (y % 2)
+            game.drawImage(invader, 15*x+frame%15/5, 9*y);
+          else
+            game.drawImage(invader, 15*x+4-frame%15/5, 9*y);
+
+          x = x + 1;
+        }
+        y = y + 1;
+      }
+
+      game.drawImage(turret,pos,game.height-10);
+    }
+
+    setInterval(play, 50);
+  </script>
+</body>
+</html>
