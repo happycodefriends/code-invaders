@@ -3,18 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Made with Thimble</title>
+  <title>Code Invaders</title>
   <style>
   canvas {
-        background: black;
-        image-rendering: -moz-crisp-edges;
-        image-rendering: optimize-contrast;
+    width: 300px;
+    height: 300px;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: optimize-contrast;
+    background: linear-gradient(to bottom, purple, black 50%, black 90%, green);
+    box-shadow: 0 0 16px black inset;
+    position: relative;
   }
-  html,body,canvas {
-    width: 100vw;
-    height: 100vh;
+  html,body {
+    width: 100%;
+    height: 100%;
     margin: 0;
     overflow:hidden;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   </style>
 </head>
@@ -22,20 +30,33 @@
 
   <canvas id="myCanvas"></canvas>
   <script>
-    var left,right,fire;
-    var pos = 40;
+    "use strict";
 
-    var game = window.myCanvas.getContext("2d");
-    game.width = pos*2;
-    game.height = game.width;
+    let left,right,fire;
 
-    var invader = new Image();
-    invader.src="invader.png";
+    let gamearea_size = 80;
+    let turret_position = gamearea_size/2;
+
+    let canvas_element = window.myCanvas;
+
+    let canvas = canvas_element.getContext("2d");
+    canvas_element.width = canvas.width = gamearea_size;
+    canvas_element.height = canvas.height = gamearea_size;
+
+    let invader = new Image();
+    invader.src="http://happycodefriends.github.io/code-invaders/invader.png";
     invader.onload=function(){ invader.loaded = true };
 
-    var turret = new Image();
-    turret.src="turret.png";
+    let turret = new Image();
+    turret.src="http://happycodefriends.github.io/code-invaders/turret.png";
     turret.onload=function(){ turret.loaded = true };
+
+    canvas_element.addEventListener("mousemove", function(e) {
+      turret_position = e.layerX/300*gamearea_size;
+    });
+    canvas_element.addEventListener("touchmove", function(e) {
+      turret_position = e.layerX/300*gamearea_size;
+    });
 
     window.addEventListener("keydown", function(e) {
       if (e.keyCode===37) left = true;
@@ -48,16 +69,16 @@
     });
 
     function play() {
-      if (left) pos = pos-4;
-      if (right) pos = pos+4;
+      if (left) turret_position = turret_position-3;
+      if (right) turret_position = turret_position+3;
 
       if (invader.loaded && turret.loaded) draw();
     }
 
-    var frame = 0;
+    let frame = 0;
     function draw() {
       frame = frame + 1;
-      game.clearRect(0,0,240,240);
+      canvas.clearRect(0,0,gamearea_size,gamearea_size);
 
       let y = 0;
       while (y < 4) {
@@ -65,19 +86,24 @@
         let x = 0;
         while (x < 6) {
           if (y % 2)
-            game.drawImage(invader, 15*x+Math.abs(frame%30/5-3), 9*y);
+            canvas.drawImage(invader, 13*x+Math.abs(frame%30/5-3), 9*y);
           else
-            game.drawImage(invader, 15*x+4-Math.abs(frame%30/5-3), 9*y);
+            canvas.drawImage(invader, 13*x+4-Math.abs(frame%30/5-3), 9*y);
 
           x = x + 1;
         }
         y = y + 1;
       }
 
-      game.drawImage(turret,pos,game.height-10);
+      canvas.drawImage(turret , turret_position-5, gamearea_size-8);
+
+      canvas.fillStyle="white";
+      canvas.font="12px arial";
+      if (left) canvas.fillText('<', 0, gamearea_size);
+      if (right) canvas.fillText('>', gamearea_size-10, gamearea_size);
     }
 
-    setInterval(play, 50);
+    setInterval(play, 40);
   </script>
 </body>
 </html>
