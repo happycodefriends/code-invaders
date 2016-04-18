@@ -8,11 +8,14 @@
   canvas {
     width: 300px;
     height: 300px;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: optimize-contrast;
+
+    image-rendering: -moz-crisp-edges;         /* Firefox */
+    image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+
     background: linear-gradient(to bottom, purple, black 50%, black 90%, green);
     box-shadow: 0 0 16px black inset;
-    position: relative;
   }
   html,body {
     width: 100%;
@@ -34,6 +37,9 @@
 
     let left,right,fire;
 
+    let rocket_x;
+    let rocket_y = 0;
+
     let gamearea_size = 80;
     let turret_position = gamearea_size/2;
 
@@ -44,33 +50,47 @@
     canvas_element.height = canvas.height = gamearea_size;
 
     let invader = new Image();
-    invader.src="http://happycodefriends.github.io/code-invaders/invader.png";
+    invader.src="https://happycodefriends.github.io/code-invaders/invader.png";
     invader.onload=function(){ invader.loaded = true };
 
     let turret = new Image();
-    turret.src="http://happycodefriends.github.io/code-invaders/turret.png";
+    turret.src="https://happycodefriends.github.io/code-invaders/turret.png";
     turret.onload=function(){ turret.loaded = true };
 
-    canvas_element.addEventListener("mousemove", function(e) {
-      turret_position = e.layerX/300*gamearea_size;
-    });
+    //canvas_element.addEventListener("mousemove", function(e) {
+    //  turret_position = (e.pageX-canvas_element.offsetLeft)/300*gamearea_size;
+    //});
     canvas_element.addEventListener("touchmove", function(e) {
-      turret_position = e.layerX/300*gamearea_size;
+      turret_position = (e.touches[0].pageX-canvas_element.offsetLeft)/300*gamearea_size;
     });
 
     window.addEventListener("keydown", function(e) {
       if (e.keyCode===37) left = true;
       if (e.keyCode===39) right = true;
+      if (e.keyCode===32) fire = true;
     });
 
     window.addEventListener("keyup", function(e) {
       if (e.keyCode===37) left = false;
       if (e.keyCode===39) right = false;
+      if (e.keyCode===32) fire = false;
     });
 
     function play() {
       if (left) turret_position = turret_position-3;
       if (right) turret_position = turret_position+3;
+
+      if (rocket_y <= 0) {
+        if (fire) {
+          rocket_y = gamearea_size - 3;
+          rocket_x = turret_position - 1;
+        }
+      }
+
+      if (rocket_y > 0) {
+        rocket_y = rocket_y -3;
+      }
+
 
       if (invader.loaded && turret.loaded) draw();
     }
@@ -101,6 +121,10 @@
       canvas.font="12px arial";
       if (left) canvas.fillText('<', 0, gamearea_size);
       if (right) canvas.fillText('>', gamearea_size-10, gamearea_size);
+
+      if (rocket_y > 0) {
+        canvas.fillRect(rocket_x, rocket_y, 1,2);
+      }
     }
 
     setInterval(play, 40);
