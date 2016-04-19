@@ -49,9 +49,46 @@
     canvas_element.width = canvas.width = gamearea_size;
     canvas_element.height = canvas.height = gamearea_size;
 
-    let invader = new Image();
-    invader.src="https://happycodefriends.github.io/code-invaders/invader.png";
-    invader.onload=function(){ invader.loaded = true };
+    let invader;
+
+    if (window.location.hash != "#createImageBitmap") {
+      invader = new Image();
+      invader.src="https://happycodefriends.github.io/code-invaders/invader.png";
+      invader.onload=function(){ invader.loaded = true };
+
+    // Currently crashing in mozilla::gfx::DataSourceSurfaceD2D1::Map
+    // https://crash-stats.mozilla.com/report/index/5eb1fa68-5b42-450d-bae9-ef9042160418
+    } else {
+
+      let invaderBitmap = `
+      ..#...#..
+      ...#.#...
+      ..#####..
+      .##.#.##.
+      .#######.
+      .#######.
+      .#.#.#.#.
+      `.trim().replace(/ /g,'').split(/\n/);
+
+      let invaderArray = invaderBitmap.reduce(
+        (all,y) => all.concat(
+          y.split('').reduce(
+            (row,x) => row.concat(
+              x==='#'?[255,255,255,255]:[0,0,0,0]
+            ),[]
+          )
+        ),[]
+      );
+      console.log(invaderArray, invaderBitmap[0].length, invaderBitmap.length);
+      createImageBitmap(
+        new ImageData(new Uint8ClampedArray(
+          invaderArray
+        ),invaderBitmap[0].length,invaderBitmap.length)
+      ).then(function(image) {
+        invader = image;
+        invader.loaded = true;
+      });
+    }
 
     let turret = new Image();
     turret.src="https://happycodefriends.github.io/code-invaders/turret.png";
@@ -105,11 +142,11 @@
 
         let x = 0;
         while (x < 6) {
-          if (y % 2)
+          if (y % 2) {
             canvas.drawImage(invader, 13*x+Math.abs(frame%30/5-3), 9*y);
-          else
+          } else {
             canvas.drawImage(invader, 13*x+4-Math.abs(frame%30/5-3), 9*y);
-
+          }
           x = x + 1;
         }
         y = y + 1;
