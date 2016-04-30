@@ -14,7 +14,7 @@ window.CodeInvaders = (function() {
     let phase = from;
 
     function raf() {
-      cb();
+      cb(phase);
 
       phase += (from < to ? 1 : -1 );
       if (phase === to) phase = from;
