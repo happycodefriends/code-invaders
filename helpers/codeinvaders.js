@@ -25,5 +25,55 @@ window.CodeInvaders = (function() {
     raf();
   }
 
+  let bmpDefender = `
+    .........
+    ....#...
+    ...###...
+    ..#####..
+    #.##.##.#
+    ###...###
+    #########
+  `;
+
+  let bmpInvader1 = `
+    ..#...#..
+    ...#.#...
+    .#######.
+    ##.###.##
+    #########
+    #.#.#.#.#
+  `;
+  let bmpInvader1b = `
+    ...#.#...
+    .. #.#...
+    .#######.
+    ##.###.##
+    #########
+    .#.#.#.#.
+  `;
+
+  function loadBitmap(bmp) {
+    let bitmap = bmp.trim().replace(/[ \t]/g,'').split(/\n/);
+
+    let canvas = document.createElement("canvas");
+    let ctx = canvas.getContext("2d");
+
+    canvas.width = ctx.width = bitmap[0].length;
+    canvas.height = ctx.height = bitmap.length;
+
+    ctx.fillStyle = "white";
+
+    bitmap.forEach(function(row, y) {
+      row.split("").forEach(function(px, x) {
+        if (px === "#") ctx.fillRect(x, y, 1, 1);
+      });
+    });
+
+    return canvas;
+  }
+
+  i.gfxDefender = loadBitmap(bmpDefender);
+  i.gfxInvader1 = loadBitmap(bmpInvader1);
+
   return i;
 })();

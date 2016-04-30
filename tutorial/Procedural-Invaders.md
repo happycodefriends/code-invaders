@@ -27,18 +27,35 @@ document.querySelector('canvas#CodeInvaders') // <= canvas element object
 # Variables
 
 ```js
-var canvasElement = document.querySelector('canvas#CodeInvaders');
-var canvas = canvasElement.getContext("2d");
+var canvasDrawingArea = document.querySelector('canvas#CodeInvaders').getContext("2d");
 
-canvas.drawImage(0,0, CodeInvaders.gfxInvader1);
+canvasDrawingArea.drawImage(CodeInvaders.gfxInvader1, 0, 0);
 ```
 
 ```js
-var canvas = document.querySelector('canvas#CodeInvaders').getContext("2d");
+var canvas = document.querySelector('canvas#CodeInvaders');
+var canvasDrawingArea = canvas.getContext("2d");
 
-canvas.drawImage(0, 0, CodeInvaders.gfxInvader1);
-canvas.drawImage(0, 100, CodeInvaders.gfxDefender);
+canvasDrawingArea.drawImage(CodeInvaders.gfxInvader1, 0, 0);
+canvasDrawingArea.drawImage(CodeInvaders.gfxDefender, 45, 90);
 ```
+
+teeeny invaders
+
+```js
+var canvas = document.querySelector('canvas#CodeInvaders');
+var canvasDrawingArea = canvas.getContext("2d");
+
+canvas.width = 100;
+canvasDrawingArea.width = 100;
+canvas.height = 100;
+canvasDrawingArea.height = 100;
+
+canvasDrawingArea.drawImage(CodeInvaders.gfxInvader1, 0, 0);
+canvasDrawingArea.drawImage(CodeInvaders.gfxDefender, 45, 90);
+```
+
+whoah, lotsa repetition!
 
 # Types
 ```js
