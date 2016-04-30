@@ -10,14 +10,21 @@ window.CodeInvaders = (function() {
   i.KEYBOARD_SPACE = 32;
   i.KEYBOARD_ENTER = 0;
 
-  i.animate = function(cb, from, to) {
+  i.animate = function(cb, from, to, speed) {
+    let frameskip = speed ? Math.round(1/speed) : 0;
+    let frame = 0;
     let phase = from;
 
     function raf() {
       cb(phase);
 
-      phase += (from < to ? 1 : -1 );
-      if (phase === to) phase = from;
+      frame++;
+      if (frame >= frameskip) {
+        frame = 0;
+        phase += (from < to ? 1 : -1 );
+
+        if (phase >= to) phase = from;
+      }
 
       window.requestAnimationFrame(raf);
     }
