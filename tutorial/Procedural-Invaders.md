@@ -1,17 +1,37 @@
+# Procedural Invaders
+
+Learn the basics of programming - variables, functions, loops - via the
+power of JavaScript and amidst loads of fun, (re-)creating a retro arcade classic:
+[Space Invaders](https://en.wikipedia.org/wiki/Space_Invaders)!
+
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<body>
-  <canvas id="CodeInvaders"></canvas>
-  <script src="helpers/codeinvaders.js"></script>
-  <script></script>
-</body>
+  <head>
+    <title>Happy Code Invaders</title>
+    <link rel="stylesheet" href="//happycodefriends.github.io/code-invaders/helpers/codeinvaders.css">
+  </head>
+  <body>
+    <canvas id="CodeInvaders" width="80" height="80"></canvas>
+
+    <script src="//happycodefriends.github.io/code-invaders/helpers/codeinvaders.js"></script>
+    <script>
+      // Your Happy Code Journey starts here!
+    </script>
+  </body>
+</html>
+
 ```
 
 # Objects & expressions
 
-collection of data, values, objects and methods all based around a common purpose
-key-value pairs, separated from the referenced object by a period (dot)
+*TL;DR:*
+> Objects are a collection of data and behavior, stuck together and made available
+> to a JavaScript code. Objects store these under labels called `properties`, that
+> reference `values` - numbers, strings, other objects or methods. All these fancy
+> properties can be accessed via a period ('`.`', dot) and the name of the property:  
+> `myObject.fancyProperty`
+
 
 ## Built-in objects
 
@@ -37,18 +57,19 @@ this a bit later.
 document.title;
 ```
 
-The title property on the document object is like that.
-http://devdocs.io/dom-document/title
+The [`title`](http://devdocs.io/dom-document/title) property on the [`document`]
+object is like that. It contains a string representation of the document's title
+(visible in the title of the current window or tab), defined in the `<title>` html
+element in the `<head>` of the current document.
 
-It contains a string representation of the document's title (visible in the window/tab),
-defined in the <title> html element. Try pasting the below script in the console.
+Try pasting the below script in the console:
 
 ```js
 document.title = prompt('New title?', document.title);
 ```
 
-You will realize it will offer you to change te current window title. Type something
-new and use the developer tools to check that indeed, the text in the <title> tag has
+You will realize it will offer you to change the current window title. Type something
+new and use the developer tools to check that indeed, the text in the `<title>` tag has
 changed - JavaScript is so powerful, because it has full access to the webpage
 loaded into the browser's memory.
 
@@ -75,11 +96,11 @@ document.querySelector('canvas#CodeInvaders');
 ```
 
 Here we invoke the [`querySelector()`] method on the `document` object.
-The call returns a [HTMLCanvasElement] object, that is inherently linked to the
+The call returns an [`HTMLCanvasElement`] object, that is inherently linked to the
 `<canvas>` element on the page. We specify this by passing a CSS [selector] as
 the first argument, which tells the method which exact HTML element we wish to retrieve.
 
-The `canvas#CodeInvaders` selector tells the browser:
+The `canvas#CodeInvaders` selector basically tells the browser:
 > give me the first `<canvas>` element on the current page, that has an `id`
 > attribute set to `"CodeInvaders"`.
 
@@ -88,12 +109,12 @@ The `canvas#CodeInvaders` selector tells the browser:
 
 You can create your [own objects], with your own [properties](object-properties)
 & [methods](object-methods).
-We will talk more about this in the [Functional Invaders](#)
+We will talk more about this in [Functional Invaders](#).
 
 
 [`document`]: http://devdocs.io/dom-document/
 
-[querySelector()]: http://devdocs.io/dom/document/queryselector
+[`querySelector()`]: http://devdocs.io/dom/document/queryselector
 
 [own objects]: http://devdocs.io/javascript/operators/object_initializer
 [object-properties]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects#Objects_and_properties
@@ -101,30 +122,46 @@ We will talk more about this in the [Functional Invaders](#)
 
 # Using the Canvas
 
+## Drawing your first alien
+
+Finally! Some good stuff - let us paint our first otherworldy space invader!
+
 ```js
-document.querySelector('canvas#CodeInvaders').getContext("2d").drawImage(0,0, CodeInvaders.gfxInvader1);
+document.querySelector('canvas#CodeInvaders').getContext("2d").drawImage(0, 0, CodeInvaders.gfxInvader1);
 ```
 
-there is a lot happening there, so let's break it up.
+Whoah, there is a whole lot happening there, so let's try and break it down to
+individual objects and calls:
 
 ## Expressions
 
-Note: semicolons
-
-Note: comments
-
 ```js
-document //
+document // <= reference to the global document object
   .querySelector('canvas#CodeInvaders') // <= canvas element object
   .getContext("2d") // <= drawing area
-  .drawImage(0,0, CodeInvaders.gfxInvader1); // <= draw an alien! 👾
+  .drawImage(0, 0, CodeInvaders.gfxInvader1); // <= draw an alien! 👾
+```
+> Note: semicolons
+
+> Note: comments
+
+```js
+document // <= same
+  .querySelector('canvas#CodeInvaders') // <= samesies
+  .getContext("2d") // <= again, nothing new here
+  .drawImage(35, 70, CodeInvaders.gfxDefender); // <= oh!
 ```
 
-[HTMLCanvasElement]: http://devdocs.io/dom/htmlcanvaselement
-http://devdocs.io/dom/htmlcanvaselement/getcontext
+That's a lot of repetition for the sake of drawing another image, isn't it?
+Can't we just say _"fetch the canvas, get the context and draw **this** and
+**that** and **those other stuff, too**"_? Of course we can, but for that
+we must learn about _variables_.
 
-http://devdocs.io/dom/canvasrenderingcontext2d
-http://devdocs.io/dom/canvasrenderingcontext2d/drawimage
+[`HTMLCanvasElement`]: http://devdocs.io/dom/htmlcanvaselement
+[`getContext()`]: http://devdocs.io/dom/htmlcanvaselement/getcontext
+
+[CanvasRenderingContext2D]: http://devdocs.io/dom/canvasrenderingcontext2d
+[`drawImage()`]: http://devdocs.io/dom/canvasrenderingcontext2d/drawimage
 
 
 # Variables
@@ -895,3 +932,15 @@ function update() {
 Actually, build a *functional* code invaders!
 * embracing ES6+
 * prototypal (with objects, no global scope)
+
+Also, a *classic invaders* to showcase OOP principles (via ES6 classes of course)
+* ES6+
+* Classes, inheritance etc.
+
+An easy, no-fuss intro to selectors
+* possibly phrase this as a game as well
+* CSS selector basics, why-s and what-s
+* for *complete* beginners
+* https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_started/Selectors
+* http://cssclasses.cssconf.eu/materials/#basic-css-syntax
+* http://css.maxdesign.com.au/selectutorial/index.htm
