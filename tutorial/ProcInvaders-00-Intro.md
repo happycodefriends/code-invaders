@@ -4,7 +4,7 @@ Learn the basics of programming - variables, functions, loops - via the
 power of JavaScript and amidst loads of fun, (re-)creating a retro arcade classic:
 [Space Invaders](https://en.wikipedia.org/wiki/Space_Invaders)!
 
-> ^^Note: Space Invaders^^
+> **Note: Space Invaders**  
 > Space Invaders is a classic arcade game, in which you, as the sole Defender of
 > Earth try to protect our planet from an alien invasion.  
 > In the game, rows of aliens slowly descend from the top of the screen, spewing

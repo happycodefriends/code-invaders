@@ -53,6 +53,17 @@ PS: try reloading the page and you will see your changes didn't persist - this i
 of course because JavaScript only manipulates _your own "copy"_ of the webpage, living
 in the browser's memory, and not the original source.
 
+> **Note: 'strings'**  
+> Strings are how we represent textual data in a computer program—they get their
+> name from being literally "strings-of-characters". You can embed strings in
+> your JavaScript code by simply typing them up - you will need to put them between
+> single or double quotes (`'` & `"`), it doesn't matter which one you use, as
+> long as you are consistent and don't mix them up.
+>
+> There are some other ways to get or create a string in a computer program, too
+> (the `prompt()` command above, for example, returns a string), but we'll get
+> back to that a bit later.
+
 
 ## Methods
 

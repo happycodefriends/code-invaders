@@ -1,18 +1,77 @@
-# Variables
+# Creating Variables
+
+> Variables are a way to store intermediate data, temporary values and
+> various other kinds of information required to run a computer program.
+
+You can store the output of any expression in a variable.
+
+First you need to  create a variable by declaring it with the `var` keyword:
 
 ```js
-var canvasDrawingArea = document.querySelector('canvas#CodeInvaders').getContext("2d");
-
-canvasDrawingArea.drawImage(CodeInvaders.gfxInvader1, 0, 0);
+var myVariable;
 ```
+
+You can also assign an initial value to a declared variable, but you can assign
+and change the value anytime later in your code.
+
+```js
+var myVariable = 'Hello!';
+
+// Once you declared a variable with var
+// you don't need to use the var keyword any more
+myVariable = 'Goodbye!';
+```
+## Storing object references
+
+So yeah, how about not retyping the commands to get our canvas object and our
+drawing context, but instead storing the whole thing in a variable?
 
 ```js
 var canvas = document.querySelector('canvas#CodeInvaders');
-var canvasDrawingArea = canvas.getContext("2d");
+var context = canvas.getContext("2d");
 
-canvasDrawingArea.drawImage(CodeInvaders.gfxInvader1, 0, 0);
-canvasDrawingArea.drawImage(CodeInvaders.gfxDefender, 35, 70);
+context.drawImage(CodeInvaders.gfxInvader1, 0, 0);
 ```
+
+This allows us to "reuse" the canvas context several times and draw anything we
+liked easily, without needing to reissue all those repetitive commands. We also
+don't really need the `canvas` variable later so we can just store the context
+in a single go:
+
+```js
+var context = document.querySelector('canvas#CodeInvaders').getContext("2d");
+
+context.drawImage(CodeInvaders.gfxInvader1, 0, 0);
+context.drawImage(CodeInvaders.gfxDefender, 35, 70);
+```
+
+# Value types
+
+Variables in JavaScript don't have a _type_, but values do. This means,
+that you can put any kind of _value_ into any variable (which can
+get rather confusing sometimes, so it's generally a good practice
+to not to shuffle the types of values around in a variable).
+
+> **Note: values vs. references**  
+> When we were storing objects in a variable, in effect we were
+> storing only _references_ to those objects. This is a rather
+> important distinction.  
+> In JavaScript objects (as well as functions and arrays) are stored
+> by reference - that is, variables, object properties, function
+> parameters only store a _reference_ to the object, which means
+> that you can refer to the *exact same* object from different places
+> (and changing the object in one place changes it in all other
+> places as well).
+>
+> Some other values (like numbers, strings, or boolean values
+> (`true`/`false`)) on the other hand are stored by their _value_,
+> which means when you assign them to a different variable/property
+> etc. they will be _copied_. This essentially means, that changing
+> the value in one place won't affect the others.
+
+
+> **Note: the `typeof` operator**  
+> You can query the type a variable or expression
 
 
 

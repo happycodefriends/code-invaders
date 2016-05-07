@@ -1,5 +1,9 @@
 # Using the Canvas
 
+> A `<canvas>` is a HTML element that lets you draw and paint arbitrary graphics
+> onto a portion of the webpage. A canvas, like any element, has a width & height
+> that you could fill with imagery to your heart's desire, using JavaScript code.
+
 Now that we have access to our magical painting canvas, let's do this.
 
 ## Drawing your first alien
@@ -7,7 +11,7 @@ Now that we have access to our magical painting canvas, let's do this.
 Finally! Some good stuff - let us paint our first otherworldy space invader!
 
 ```js
-document.querySelector('canvas#CodeInvaders').getContext("2d").drawImage(CodeInvaders.gfxInvader1, 0, 0);
+document.querySelector('canvas#CodeInvaders').getContext('2d').drawImage(CodeInvaders.gfxInvader1, 0, 0);
 ```
 
 Whoah, there is a whole lot happening there, so let's try and break it down to
@@ -17,16 +21,18 @@ individual objects and calls:
 
 ```js
 document // <= reference to the global document object
-  .querySelector('canvas#CodeInvaders') // <= canvas element object
-  .getContext("2d") // <= drawing area
+  .querySelector('canvas#CodeInvaders') // <= get the JS object
+                                        //    for the canvas element
+  .getContext('2d') // <= get the JS object
+                    // for the drawing area
   .drawImage(CodeInvaders.gfxInvader1, 0, 0); // <= draw an alien! 👾
 ```
 
 What happened here is we broke up our one-liner to smaller chunks for the sake of
 better readability - but the result of the operation is unchanged! JavaScript
-doesn't really care much about whitespace - but humans do! So it is a good practice
-to write code in a readable way (others reading your code, and even your future
-self will thank you!)
+doesn't really care much about whitespace *(spaces, tabs, newlines)* - but humans do!
+So it is a good practice to write code in a readable way (others reading your code,
+and even your future self will thank you!)
 
 > **Note: semicolons**  
 > There are languages who care about whitespace (that is, spaces, tabs and newlines),
@@ -96,7 +102,7 @@ The `x`/`y` coordinates (second/third parameter) on the other hand, feel free to
 > Both `x` and `y` are simple numbers, describing how far from the left (`x`),
 > or top (`y`) of the drawing surface (canvas context) should the image be drawn.
 > (0,0) thus marks the top-left-most corner of the game area.
-> Note that images are draw by their top-left corner (that is, images will extend
+> Note that images are drawn by their top-left corner (that is, images will extend
 > from that x/y coordinate further to the right/towards the bottom, depending on
 > the size of the image.)
 
@@ -105,7 +111,7 @@ The `x`/`y` coordinates (second/third parameter) on the other hand, feel free to
 Now if I told you we also have a sprite referenced by `CodeInvaders.gfxDefender`,
 could you draw it, too, and place it somewhere near the bottom of the screen?
 
-> **Note: game area size**
+> **Note: game area size**  
 > Currently the game area is set to a size of 80x80 pixels (you can see this
 > specified on the `<canvas>` element in the HTML).
 > You will be able to change this if you wish in one of the following quests,
@@ -119,21 +125,21 @@ This is one way to do something like that:
 ```js
 document // <= same
   .querySelector('canvas#CodeInvaders') // <= samesies
-  .getContext("2d") // <= again, nothing new here
+  .getContext('2d') // <= again, nothing new here
   .drawImage(CodeInvaders.gfxDefender, 35, 70); // <= oh!
 ```
 
-Our defender is centered on the bottom of the screen - see the green pastures
-beyond? Our dearest beautiful homeland we are trying to save from the alien
+Our defender is now centered at the bottom of the screen - see the green pastures
+beyond? That's our dearest beautiful homeland we are trying to protect from the alien
 invasion!
 
-But that's a lot of repetition for the sake of drawing another image, isn't it?
+Well, that's a lot of repetition for the sake of drawing another image, isn't it?
 Can't we just say _"fetch the canvas, get the context and draw **this** and
 **that** and **those other stuff, too**"_?  
-Of course we can, but for that we need to meet _variables_ first.
+Of course we can, but for that we need an introduction to _variables_.
 
 
-[» Continue to the Next Quest](./ProcInvaders-02-Canvas.md)
+[» Continue to the Next Quest](./ProcInvaders-03-Variables.md)
 
 
 [`HTMLCanvasElement`]: http://devdocs.io/dom/htmlcanvaselement
